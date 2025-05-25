@@ -1,12 +1,11 @@
 from rest_framework import viewsets, permissions
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from posts.models import Follow
 from .serializers import FollowSerializer
-from .permissions import IsOwnerOrReadOnly
+
 
 User = get_user_model()
+
 
 class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = FollowSerializer

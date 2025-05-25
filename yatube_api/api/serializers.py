@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 
 from posts.models import Comment, Post, Group, Follow
 
+
 User = get_user_model()
 
 
@@ -23,7 +24,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     author = SlugRelatedField(
-        read_only=True, 
+        read_only=True,
         slug_field='username'
     )
     post = serializers.PrimaryKeyRelatedField(read_only=True)

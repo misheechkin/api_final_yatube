@@ -2,22 +2,25 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.core.validators import MinLengthValidator
 
+
 User = get_user_model()
 
 
 class Post(models.Model):
     text = models.TextField(
-        validators=[MinLengthValidator(1, message='Текст не может быть пустым')]
+        validators=[MinLengthValidator(
+            1, message='Текст не может быть пустым'
+        )]
     )
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     author = models.ForeignKey(
-        User, 
-        on_delete=models.CASCADE, 
+        User,
+        on_delete=models.CASCADE,
         related_name='posts'
     )
     image = models.ImageField(
-        upload_to='posts/', 
-        null=True, 
+        upload_to='posts/',
+        null=True,
         blank=True
     )
     group = models.ForeignKey(
@@ -48,21 +51,23 @@ class Group(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(
-        User, 
-        on_delete=models.CASCADE, 
+        User,
+        on_delete=models.CASCADE,
         related_name='comments'
     )
     post = models.ForeignKey(
-        Post, 
-        on_delete=models.CASCADE, 
+        Post,
+        on_delete=models.CASCADE,
         related_name='comments'
     )
     text = models.TextField(
-        validators=[MinLengthValidator(1, message='Комментарий не может быть пустым')]
+        validators=[MinLengthValidator(
+            1, message='Комментарий не может быть пустым'
+        )]
     )
     created = models.DateTimeField(
-        'Дата добавления', 
-        auto_now_add=True, 
+        'Дата добавления',
+        auto_now_add=True,
         db_index=True
     )
 
