@@ -21,8 +21,11 @@ class Post(models.Model):
     image = models.ImageField(
         upload_to='posts/', null=True, blank=True)
     group = models.ForeignKey(
-        Group, on_delete=models.CASCADE,
-        related_name="posts", blank=True, null=True
+        Group,
+        related_name='posts',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -42,20 +45,19 @@ class Comment(models.Model):
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
-        related_name='follower',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='follower'
     )
     following = models.ForeignKey(
         User,
-        related_name='following',
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='following'
     )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['following', 'user'], name='unique_follow'
+                fields=['user', 'following'],
+                name='unique_follow'
             )
         ]
